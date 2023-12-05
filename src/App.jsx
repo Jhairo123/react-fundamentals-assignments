@@ -1,25 +1,29 @@
-import { Menu } from "./components/Menu";
-
-export function AppRouter() {
-  return (
-    <>
-      <Menu />
-       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/events" element={<EventListPage />} />
-        <Route path="/events/:eventId" element={<EventDetailPage />} />
-        <Route path="/events/:eventId/tickets/:priceId" element={<TicketPaymentPage />} />
-      </Routes>
-    </>
-  );
-}
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import AboutPage from "./pages/AboutPage";
+import HomePage from "./pages/HomePage";
+import NotFound from "./pages/NotFound";
 
 export function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <div>
-        <AppRouter />
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route index element={<HomePage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </div>
-    <Router/>
+    </BrowserRouter>
   );
 }
