@@ -1,7 +1,10 @@
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import AboutPage from "./pages/AboutPage";
-import HomePage from "./pages/HomePage";
-import NotFound from "./pages/NotFound";
+
+// Usa React.lazy para cargar las páginas de forma diferida
+const HomePage = lazy(() => import("./pages/HomePage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 export function App() {
   return (
@@ -19,9 +22,30 @@ export function App() {
         </nav>
 
         <Routes>
-          <Route index element={<HomePage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="*" element={<NotFound />} />
+          <Route
+            index
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <HomePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="about"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <AboutPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <NotFound />
+              </Suspense>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>
